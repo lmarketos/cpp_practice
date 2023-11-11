@@ -4,3 +4,6 @@ ENV HOME /root
 
 SHELL ["/bin/bash", "-c"]
 
+COPY conanfile.txt /root
+RUN conan install /root --build=missing -s build_type=Debug
+
