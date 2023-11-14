@@ -18,7 +18,7 @@ bool is_palindrome(int i)
 
 std::string longestCommonPrefix(const std::vector<std::string> &strs)
 {
-    std::string common{strs[0]};
+    auto common = std::string{strs[0]};
     for (const auto &str : strs)
     {
         auto end = std::ranges::mismatch(common, str).in1;
@@ -29,8 +29,8 @@ std::string longestCommonPrefix(const std::vector<std::string> &strs)
 
 bool is_valid(std::string s)
 {
-    std::stack<char> token_stack{};
-    std::unordered_map<char, char> tokens{{')', '('}, {'}', '{'}, {']', '['}};
+    auto token_stack = std::stack<char>{};
+    auto tokens = std::unordered_map<char, char>{{')', '('}, {'}', '{'}, {']', '['}};
     for (auto c : s)
     {
         auto closing = tokens[c];
@@ -63,10 +63,10 @@ int main(int argc, char **argv)
     auto i = result["i"].as<int>();
     std::cout << i << " is " << (!is_palindrome(i) ? " not " : "") << "a palindrome!\n";
 
-    std::vector<std::string> v{"asdf", "astg", "as"};
+    auto v = std::vector<std::string>{"asdf", "astg", "as"};
     std::cout << "Common prefix is: " << longestCommonPrefix(v) << '\n';
 
-    std::string s = "(){}[]([{}{}])";
+    auto s = std::string{"(){}[]([{}{}])"};
     std::cout << s << " is " << (!is_valid(s) ? " not " : "") << " valid.\n";
     return 0;
 }
