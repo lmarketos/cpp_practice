@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 
-bool is_palindrome(int i)
+auto is_palindrome(int i) -> bool
 {
     auto str = std::to_string(i);
 
@@ -16,7 +16,7 @@ bool is_palindrome(int i)
                               str | std::views::reverse | std::views::take(str.size() / 2));
 }
 
-std::string longestCommonPrefix(const std::vector<std::string> &strs)
+auto longestCommonPrefix(const std::vector<std::string> &strs) -> std::string
 {
     auto common = std::string{strs[0]};
     for (const auto &str : strs)
@@ -27,7 +27,7 @@ std::string longestCommonPrefix(const std::vector<std::string> &strs)
     return common;
 }
 
-bool is_valid(std::string s)
+auto is_valid(std::string s) -> bool
 {
     auto token_stack = std::stack<char>{};
     auto tokens = std::unordered_map<char, char>{{')', '('}, {'}', '{'}, {']', '['}};
@@ -48,9 +48,9 @@ bool is_valid(std::string s)
     return token_stack.empty();
 }
 
-int main(int argc, char **argv)
+auto main(int argc, char **argv) -> int
 {
-    cxxopts::Options options(std::source_location::current().file_name());
+    auto options = cxxopts::Options{std::source_location::current().file_name()};
     options.add_options()("i", "Int to check for palindrome", cxxopts::value<int>())("h,help", "Print usage");
     options.parse_positional({"i"});
     auto result = options.parse(argc, argv);
