@@ -1,9 +1,11 @@
 #include <cxxopts.hpp>
 #include <iostream>
 #include <iterator>
+#include <map>
 #include <ranges>
 #include <source_location>
 #include <string>
+#include <utility>
 #include <vector>
 
 bool is_palindrome(int i)
@@ -25,6 +27,27 @@ std::string longestCommonPrefix(const std::vector<std::string> &strs)
     return common;
 }
 
+bool is_valid(std::string s)
+{
+    std::stack<char> token_stack{};
+    std::unordered_map<char, char> tokens{{')', '('}, {'}', '{'}, {']', '['}};
+    for (auto c : s)
+    {
+        auto closing = tokens[c];
+
+        if (token_stack.size() > 0 && closing == token_stack.top())
+        {
+            token_stack.pop();
+        }
+        else
+        {
+            token_stack.push(c);
+        }
+    }
+
+    return token_stack.empty();
+}
+
 int main(int argc, char **argv)
 {
     cxxopts::Options options(std::source_location::current().file_name());
@@ -42,5 +65,8 @@ int main(int argc, char **argv)
 
     std::vector<std::string> v{"asdf", "astg", "as"};
     std::cout << "Common prefix is: " << longestCommonPrefix(v) << '\n';
+
+    std::string s = "(){}[]([{}{}])";
+    std::cout << s << " is " << (!is_valid(s) ? " not " : "") << " valid.\n";
     return 0;
 }
